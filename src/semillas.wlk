@@ -73,6 +73,12 @@ class Parcela {
 	const property horasSolPorDia
 	const plantas = []
 	
+	constructor(_largo, _ancho, _horasSolPorDia){
+		largo = _largo
+		ancho = _ancho
+		horasSolPorDia = _horasSolPorDia
+	}
+	
 	method superficie() = largo * ancho
 	method maximaCantPlantas() {
 		return if (ancho > largo) self.superficie() / 5

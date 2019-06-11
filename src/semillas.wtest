@@ -2,8 +2,8 @@ import semillas.*
 
 describe "Tests de Plantas, Parcelas e INTA" {
 var planta1
-//var planta2
-//var parcelaEcologica
+var planta2
+var parcela1
 //var parcelaIndustrial
 
 	
@@ -59,13 +59,27 @@ var planta1
 		assert.notThat(planta1.nuevasSemillas())
 	}
 	
-	test "La Quinoa al ser fuerte da nuevas semillas aunque su fecha sea posterior a 2005" {
-		planta1= new Quinoa(2006,1,11)
+	test "La Quinoa al ser fuerte da nuevas semillas aunque su fecha no sea anterior a 2005" {
+		planta1= new Quinoa(2005,1,11)
 		assert.that(planta1.nuevasSemillas())
 	}
 	
+	test "La Quinoa aunque no tolera mas de 10 horas de sol al tener semillas anteriores a 2005" {
+		planta1= new Quinoa(2004,1,8)
+		assert.that(planta1.nuevasSemillas())
+	}
+	
+	test "La hierbabuena ocupa el doble de lo que ocupa una igual de menta" {
+		planta1 = new HierbaBuena(2004,2)
+		planta2 = new Menta(2004,2)
+		assert.equals(planta1.espacioPlantada(), planta2.espacioPlantada()*2)
 		
-	//override method nuevasSemillas() = super() or (anioSemilla > 2007 and altura > 1)
+	}
+	
+	test "La soja trans resulta ideal para una parcela con capacidad maxima 1" {
+		parcela1 = new Parcela()
+		
+	}
 	
 	
 /*
