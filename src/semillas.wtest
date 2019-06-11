@@ -1,0 +1,91 @@
+import semillas.*
+
+describe "Tests de Plantas, Parcelas e INTA" {
+var planta1
+//var planta2
+//var parcelaEcologica
+//var parcelaIndustrial
+
+	
+	/*
+	fixture {
+		//inta.agregarParcela(parcelaEcologica)
+		//inta.agregarParcela(parcelaIndustrial)
+		//parcelaEcologica.agregarPlanta(planta1)
+		//parcelaIndustrial.agregarPlanta(planta1)
+	}
+	* */
+
+	
+	test "Menta no da semillas si mide 0.4 mts de altura" {
+		planta1 = new Menta(2010,0.4)
+		assert.notThat(planta1.nuevasSemillas())
+	}
+	
+	test "Menta da semillas si su altura es mayor a 0.4" {
+		planta1 = new Menta(2010,0.5)
+		assert.that(planta1.nuevasSemillas())
+	}
+	
+	test "Menta no es fuerte ya que solo tolera 6 horas de sol por dia y no más de 10" {
+		planta1 = new Menta(2010,90)
+		assert.notThat(planta1.esFuerte())
+	}
+	
+	test "La soja tolera 6 horas si su altura es menor a 0.5m, 7 horas si mide entre 0.5m a 1m y 9 horas si es mayor a 1m" {
+		planta1= new Soja(2010,0.4)
+		assert.equals(planta1.horasSolTolera(),6)
+		planta1= new Soja(2010,0.5)
+		assert.equals(planta1.horasSolTolera(),7)
+		planta1= new Soja(2010,1)
+		assert.equals(planta1.horasSolTolera(),7)
+		planta1= new Soja(2010,1.1)
+		assert.equals(planta1.horasSolTolera(),9) 
+				
+	}	 
+	
+	test "La soja da nuevas semillas si mide mas de 1 metro y sus semilla es posterior a 2007" {
+		planta1= new Soja(2008,1.1)
+		assert.that(planta1.nuevasSemillas())
+	}	 
+	
+	test "La soja NO da nuevas semillas si mide mas de 1 metro y sus semilla pero no es posterior a 2007" {
+		planta1= new Soja(2007,1.1)
+		assert.notThat(planta1.nuevasSemillas())
+	}
+	
+	test "La soja NO da nuevas semillas si no mide mas de 1 metro aunque sus semilla sea posterior a 2007" {
+		planta1= new Soja(2010,1)
+		assert.notThat(planta1.nuevasSemillas())
+	}
+	
+	test "La Quinoa al ser fuerte da nuevas semillas aunque su fecha sea posterior a 2005" {
+		planta1= new Quinoa(2006,1,11)
+		assert.that(planta1.nuevasSemillas())
+	}
+	
+		
+	//override method nuevasSemillas() = super() or (anioSemilla > 2007 and altura > 1)
+	
+	
+/*
+ * EjemplosSoja:
+* una menta de 1 metro, debería dar semillas y ocupar un espacio de 3 metros cuadrados.
+* una menta de solo 0.3 metros, no debería dar semillas y ocuparía 0.9 m2 de espacio.
+Por ejemplo, si tuviesemos una soja de 0.6 metros y de semilla de 2009, 
+la planta tendría una tolerancia al sol de 7 horas, no daría semillas y ocuparía 0.3 m2.
+Por ejemploQuinoa:
+* si tenemos una quinoa que tolera 12 horas de sol y su semilla de origen es de 2010, se trata de una planta que da semillas.
+* si tenemos una planta que tolere 9 horas de sol pero cuya semilla de origen es de 2001, también da semillas.
+
+ejemploParcela:
+Una parcela de 20 mts. de ancho por 1 mt. de largo que recibe 8 horas de sol por día, 
+tiene una superficie de 20 m2 y la cantidad máxima de plantas que tolera es de 4.
+
+Si a esa parcela le plantamos 4 plantas de soja de más de 1 metro (que toleran 9 horas de sol), 
+no tendría complicaciones. Si intentaramos agregar una quinta planta, se superaría la cantidad máxima y nos arrojaría un error.
+*/
+
+
+
+}
