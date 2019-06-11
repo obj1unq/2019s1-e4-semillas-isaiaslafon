@@ -115,6 +115,5 @@ object inta {
 
 	method promedioDePlantas() = parcelas.sum({unaParcela => unaParcela.totalPlantas()}) / parcelas.size()
 	method parcelaMasAutosustentable() = parcelas.filter({unaParcela.totalPlantas() > 4}).max({unaParcela => unaParcela.promedioAsociaBien()})
-	method agregarParcela(unaParcela) { parcelas.add(unaParcela)}
-	 
+	method agregarParcela(unaParcela) { parcelas.add(unaParcela)} 
 }

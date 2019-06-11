@@ -76,9 +76,10 @@ var parcela1
 		
 	}
 	
-	test "La soja trans resulta ideal para una parcela con capacidad maxima 1" {
-		parcela1 = new Parcela()
-		
+	test "La soja resulta ideal si las horas de sol que tolera son las mismas que recibe la parcel a por dia" {
+		planta1 = new Soja(2007,1)
+		parcela1 = new ParcelaEcologica(1,1,7)
+		assert.that( planta1.resultaIdeal(parcela1))
 	}
 	
 	
