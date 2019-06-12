@@ -83,7 +83,24 @@ describe "Tests de Plantas, Parcelas e INTA" {
 		assert.notThat(planta1.seAsociaBien(parcela1))	
 	}
 	
+	test "Una parcela tiene complicaicones si una planta no tolera las horas de sol por dia de dicha parcela" {
+ 		planta1= new Quinoa(2005,1,11)
+ 		planta2= new Quinoa(2005,1,5)
+ 		parcela1 = new ParcelaIndustrial(8,9,6)
+ 		parcela1.agregarPlanta(planta1)
+ 		parcela1.agregarPlanta(planta2)
+		assert.that(parcela1.tieneComplicaciones())
+	}
 	
+	test "Agregar una planta que no cumple la condicion de error lo dispara segun descripcion" {
+ 		planta1= new Quinoa(2005,1,11)
+ 		planta2= new Quinoa(2005,1,20)
+ 		parcela1 = new ParcelaIndustrial(1,1,20)
+ 		assert.throwsExceptionWithMessage(("Hay demasiado sol para esta planta!"), {parcela1.agregarPlanta(planta1)})
+ 		parcela1 = new ParcelaIndustrial(0,0,20)
+ 		assert.throwsExceptionWithMessage(("No hay mas espacio!"),{parcela1.agregarPlanta(planta2)})
+ 		
+	}
 	
 
 	

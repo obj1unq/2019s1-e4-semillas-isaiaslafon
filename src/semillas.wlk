@@ -85,15 +85,16 @@ class Parcela {
 				else (self.superficie() / 3 + largo).truncate(0)
 	}
 	
-	method noHayMasLugar() = self.totalPlantas() == self.maximaCantPlantas()
+	method hayLugar() = self.totalPlantas() < self.maximaCantPlantas()
 		
 	method tieneComplicaciones() = plantas.any({unaPlanta => unaPlanta.horasSolTolera() < horasSolPorDia}) 
 	
 	method totalPlantas() = plantas.size()
 	
-	method planta(unaPlanta) { 
-		if (self.noHayMasLugar() or horasSolPorDia >= unaPlanta.horasSolTolera() + 2) plantas.add(unaPlanta)
-		else throw new Exception("No hay más espacio!")
+	method agregarPlanta(unaPlanta) { 
+		if (not self.hayLugar()) throw new Exception("No hay mas espacio!")
+		if (horasSolPorDia >= unaPlanta.horasSolTolera() + 2) throw new Exception("Hay demasiado sol para esta planta!")
+		plantas.add(unaPlanta)
 	}
 	
 	method plantaMasGrande() = plantas.max({unaPlanta => unaPlanta.altura()})
