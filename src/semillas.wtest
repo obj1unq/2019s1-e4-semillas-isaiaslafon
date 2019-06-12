@@ -5,6 +5,7 @@ describe "Tests de Plantas, Parcelas e INTA" {
 	var planta1 = new Menta(2010,0.4)
 	var planta2 = new Menta(2010,0.4)
 	var parcela1 = new ParcelaIndustrial(1,1,1)
+	var parcela2 = new ParcelaEcologica(1,1,1)
 
 	test "Menta no da semillas si mide 0.4 mts de altura" {
 		planta1 = new Menta(2010,0.4)
@@ -102,6 +103,28 @@ describe "Tests de Plantas, Parcelas e INTA" {
  		
 	}
 	
+	test "promedio de plantas es 0 si no hay plantas en las parcelas" {
+		inta.agregarParcela(parcela1)
+		assert.equals(0, inta.promedioDePlantas())
+	}
 
+	test "promedio de plantas es 1 si hay una unica planta" {
+		parcela1 = new ParcelaIndustrial(2,4,10)
+		planta1= new Quinoa(2005,1,10)
+		inta.agregarParcela(parcela1)
+		parcela1.agregarPlanta(planta1)
+		assert.equals(1, inta.promedioDePlantas())
+	}
+	
+	/*
+	test "promedio de plantas es 0.5 si hay una unica planta y 2 parcelas" {
+		inta.agregarParcela(parcela1)
+		parcela1.agregarPlanta(planta1)
+		parcela1.agregarPlanta(new Quinoa(2005,1,10))
+		parcela1.agregarPlanta(new Quinoa(2005,1,10))
+		
+	}
+	* */
+	*/
 	
 }
