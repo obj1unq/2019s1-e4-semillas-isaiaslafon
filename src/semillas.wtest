@@ -73,8 +73,18 @@ describe "Tests de Plantas, Parcelas e INTA" {
 	
 	test "una parcela industrial se asocia bien si la maxima cantidad de plantas es 2 y la planmta es fuerte" {
 		parcela1 = new ParcelaIndustrial(2.5,4,2)
-		assert.equals(parcela1.maximaCantPlantas(), 2)	
-		
+		planta1 = new Quinoa(1,1,12)
+		assert.that(planta1.seAsociaBien(parcela1))	
 	}
+	
+	test "una parcela industrial no se asocia bien si la maxima cantidad de plantas no es 2 aunque la planmta es fuerte" {
+		parcela1 = new ParcelaIndustrial(1,2,2)
+		planta1 = new Quinoa(1,1,12)
+		assert.notThat(planta1.seAsociaBien(parcela1))	
+	}
+	
+	
+	
 
+	
 }
