@@ -81,8 +81,8 @@ class Parcela {
 	
 	method superficie() = largo * ancho
 	method maximaCantPlantas() {
-		return if (ancho > largo) self.superficie() / 5
-				else self.superficie() / 3 + largo
+		return if (ancho > largo) (self.superficie() / 5).truncate(0)
+				else (self.superficie() / 3 + largo).truncate(0)
 	}
 	
 	method noHayMasLugar() = self.totalPlantas() == self.maximaCantPlantas()

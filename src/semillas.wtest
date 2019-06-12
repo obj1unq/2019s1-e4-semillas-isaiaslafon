@@ -1,22 +1,11 @@
 import semillas.*
 
 describe "Tests de Plantas, Parcelas e INTA" {
-var planta1
-var planta2
-var parcela1
-//var parcelaIndustrial
 
-	
-	/*
-	fixture {
-		//inta.agregarParcela(parcelaEcologica)
-		//inta.agregarParcela(parcelaIndustrial)
-		//parcelaEcologica.agregarPlanta(planta1)
-		//parcelaIndustrial.agregarPlanta(planta1)
-	}
-	* */
+	var planta1 = new Menta(2010,0.4)
+	var planta2 = new Menta(2010,0.4)
+	var parcela1 = new ParcelaIndustrial(1,1,1)
 
-	
 	test "Menta no da semillas si mide 0.4 mts de altura" {
 		planta1 = new Menta(2010,0.4)
 		assert.notThat(planta1.nuevasSemillas())
@@ -79,28 +68,13 @@ var parcela1
 	test "La soja resulta ideal si las horas de sol que tolera son las mismas que recibe la parcel a por dia" {
 		planta1 = new Soja(2007,1)
 		parcela1 = new ParcelaEcologica(1,1,7)
-		assert.that( planta1.resultaIdeal(parcela1))
+		assert.that(planta1.resultaIdeal(parcela1))
 	}
 	
-	
-/*
- * EjemplosSoja:
-* una menta de 1 metro, debería dar semillas y ocupar un espacio de 3 metros cuadrados.
-* una menta de solo 0.3 metros, no debería dar semillas y ocuparía 0.9 m2 de espacio.
-Por ejemplo, si tuviesemos una soja de 0.6 metros y de semilla de 2009, 
-la planta tendría una tolerancia al sol de 7 horas, no daría semillas y ocuparía 0.3 m2.
-Por ejemploQuinoa:
-* si tenemos una quinoa que tolera 12 horas de sol y su semilla de origen es de 2010, se trata de una planta que da semillas.
-* si tenemos una planta que tolere 9 horas de sol pero cuya semilla de origen es de 2001, también da semillas.
-
-ejemploParcela:
-Una parcela de 20 mts. de ancho por 1 mt. de largo que recibe 8 horas de sol por día, 
-tiene una superficie de 20 m2 y la cantidad máxima de plantas que tolera es de 4.
-
-Si a esa parcela le plantamos 4 plantas de soja de más de 1 metro (que toleran 9 horas de sol), 
-no tendría complicaciones. Si intentaramos agregar una quinta planta, se superaría la cantidad máxima y nos arrojaría un error.
-*/
-
-
+	test "una parcela industrial se asocia bien si la maxima cantidad de plantas es 2 y la planmta es fuerte" {
+		parcela1 = new ParcelaIndustrial(2.5,4,2)
+		assert.equals(parcela1.maximaCantPlantas(), 2)	
+		
+	}
 
 }
