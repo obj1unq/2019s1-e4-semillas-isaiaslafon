@@ -1,0 +1,129 @@
+import semillas.*
+
+describe "Tests de Plantas, Parcelas e INTA" {
+
+	var planta1 = new Menta(2010,0.4)
+	var planta2 = new Menta(2010,0.4)
+	var parcela1 = new ParcelaIndustrial(1,1,1)
+	var parcela2 = new ParcelaEcologica(1,1,1)
+
+	test "Menta no da semillas si mide 0.4 mts de altura" {
+		planta1 = new Menta(2010,0.4)
+		assert.notThat(planta1.nuevasSemillas())
+	}
+	
+	test "Menta da semillas si su altura es mayor a 0.4" {
+		planta1 = new Menta(2010,0.5)
+		assert.that(planta1.nuevasSemillas())
+	}
+	
+	test "Menta no es fuerte ya que solo tolera 6 horas de sol por dia y no más de 10" {
+		planta1 = new Menta(2010,90)
+		assert.notThat(planta1.esFuerte())
+	}
+	
+	test "La soja tolera 6 horas si su altura es menor a 0.5m, 7 horas si mide entre 0.5m a 1m y 9 horas si es mayor a 1m" {
+		planta1= new Soja(2010,0.4)
+		assert.equals(planta1.horasSolTolera(),6)
+		planta1= new Soja(2010,0.5)
+		assert.equals(planta1.horasSolTolera(),7)
+		planta1= new Soja(2010,1)
+		assert.equals(planta1.horasSolTolera(),7)
+		planta1= new Soja(2010,1.1)
+		assert.equals(planta1.horasSolTolera(),9) 
+				
+	}	 
+	
+	test "La soja da nuevas semillas si mide mas de 1 metro y sus semilla es posterior a 2007" {
+		planta1= new Soja(2008,1.1)
+		assert.that(planta1.nuevasSemillas())
+	}	 
+	
+	test "La soja NO da nuevas semillas si mide mas de 1 metro y sus semilla pero no es posterior a 2007" {
+		planta1= new Soja(2007,1.1)
+		assert.notThat(planta1.nuevasSemillas())
+	}
+	
+	test "La soja NO da nuevas semillas si no mide mas de 1 metro aunque sus semilla sea posterior a 2007" {
+		planta1= new Soja(2010,1)
+		assert.notThat(planta1.nuevasSemillas())
+	}
+	
+	test "La Quinoa al ser fuerte da nuevas semillas aunque su fecha no sea anterior a 2005" {
+		planta1= new Quinoa(2005,1,11)
+		assert.that(planta1.nuevasSemillas())
+	}
+	
+	test "La Quinoa aunque no tolera mas de 10 horas de sol al tener semillas anteriores a 2005" {
+		planta1= new Quinoa(2004,1,8)
+		assert.that(planta1.nuevasSemillas())
+	}
+	
+	test "La hierbabuena ocupa el doble de lo que ocupa una igual de menta" {
+		planta1 = new HierbaBuena(2004,2)
+		planta2 = new Menta(2004,2)
+		assert.equals(planta1.espacioPlantada(), planta2.espacioPlantada()*2)
+		
+	}
+	
+	test "La soja resulta ideal si las horas de sol que tolera son las mismas que recibe la parcel a por dia" {
+		planta1 = new Soja(2007,1)
+		parcela1 = new ParcelaEcologica(1,1,7)
+		assert.that(planta1.resultaIdeal(parcela1))
+	}
+	
+	test "una parcela industrial se asocia bien si la maxima cantidad de plantas es 2 y la planmta es fuerte" {
+		parcela1 = new ParcelaIndustrial(2.5,4,2)
+		planta1 = new Quinoa(1,1,12)
+		assert.that(planta1.seAsociaBien(parcela1))	
+	}
+	
+	test "una parcela industrial no se asocia bien si la maxima cantidad de plantas no es 2 aunque la planmta es fuerte" {
+		parcela1 = new ParcelaIndustrial(1,2,2)
+		planta1 = new Quinoa(1,1,12)
+		assert.notThat(planta1.seAsociaBien(parcela1))	
+	}
+	
+	test "Una parcela tiene complicaicones si una planta no tolera las horas de sol por dia de dicha parcela" {
+ 		planta1= new Quinoa(2005,1,11)
+ 		planta2= new Quinoa(2005,1,5)
+ 		parcela1 = new ParcelaIndustrial(8,9,6)
+ 		parcela1.agregarPlanta(planta1)
+ 		parcela1.agregarPlanta(planta2)
+		assert.that(parcela1.tieneComplicaciones())
+	}
+	
+	test "Agregar una planta que no cumple la condicion de error lo dispara segun descripcion" {
+ 		planta1= new Quinoa(2005,1,11)
+ 		planta2= new Quinoa(2005,1,20)
+ 		parcela1 = new ParcelaIndustrial(1,1,20)
+ 		assert.throwsExceptionWithMessage(("Hay demasiado sol para esta planta!"), {parcela1.agregarPlanta(planta1)})
+ 		parcela1 = new ParcelaIndustrial(0,0,20)
+ 		assert.throwsExceptionWithMessage(("No hay mas espacio!"),{parcela1.agregarPlanta(planta2)})
+ 		
+	}
+	
+	test "promedio de plantas es 0 si no hay plantas en las parcelas" {
+		inta.agregarParcela(parcela1)
+		assert.equals(0, inta.promedioDePlantas())
+	}
+
+	test "promedio de plantas es 1 si hay una unica planta" {
+		parcela1 = new ParcelaIndustrial(2,4,10)
+		planta1= new Quinoa(2005,1,10)
+		inta.agregarParcela(parcela1)
+		parcela1.agregarPlanta(planta1)
+		assert.equals(1, inta.promedioDePlantas())
+	}
+	
+	/*
+	test "promedio de plantas es 0.5 si hay una unica planta y 2 parcelas" {
+		inta.agregarParcela(parcela1)
+		parcela1.agregarPlanta(planta1)
+		parcela1.agregarPlanta(new Quinoa(2005,1,10))
+		parcela1.agregarPlanta(new Quinoa(2005,1,10))
+		
+	}
+	* */
+	
+}
